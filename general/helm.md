@@ -15,6 +15,16 @@ components:
 
  Artifact Hub: distributed community chart repository
  
- 
+***Create a chart***
+
+`helm create hello-world`
+```
+hello-world /
+  Chart.yaml #file that contains the description of our chart
+  values.yaml #file that contains the default values for our chart
+  templates / #directory where Kubernetes resources are defined as templates
+  charts / #optional directory that may contain sub-charts
+  .helmignore #patterns to ignore when packaging
+```
 
 source: https://www.baeldung.com/ops/kubernetes-helm

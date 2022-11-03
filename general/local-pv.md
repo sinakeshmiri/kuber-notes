@@ -59,3 +59,6 @@ spec:
  ```
         
  `kubectl create -f persistentVolume.yaml`
+
+
+source: https://vocon-it.com/2018/12/20/kubernetes-local-persistent-volumes/

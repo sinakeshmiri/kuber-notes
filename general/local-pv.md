@@ -12,8 +12,7 @@ mkdir -p /mnt/disk/$DIRNAME
 chcon -Rt svirt_sandbox_file_t /mnt/disk/$DIRNAME
 chmod 777 /mnt/disk/$DIRNAME
 
-# on master:
-kubectl create -f persistentVolume.yaml
+
 ```
  
  
@@ -59,3 +58,4 @@ spec:
           - node1
  ```
         
+ `kubectl create -f persistentVolume.yaml`

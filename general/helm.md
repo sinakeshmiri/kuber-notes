@@ -27,4 +27,45 @@ hello-world /
   .helmignore #patterns to ignore when packaging
 ```
 
-source: https://www.baeldung.com/ops/kubernetes-helm
+ Go template language ===>> Helm template language
+ 
+ see the actual template:
+ 
+
+
+ 
+{{}}: This is what is called a template directive.
+
+***sample:***
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  myvalue: "Hello World"
+ 
+```
+``` 
+  .X.Y
+  ||  \-> Y :  look inside of it for an object called Name
+  ||-> X : find the X object
+  |--> . : top-most namespace for this scope
+````
+
+
+```
+helm install [--debug --dry-run] full-coral ./mychart
+
+helm get manifest full-coral # takes a release name and prints the Kubernetes resources 
+
+helm uninstall full-coral
+
+```
+
+
+source:
+
+https://www.baeldung.com/ops/kubernetes-helm
+
+https://helm.sh/docs/chart_template_guide/getting_started/

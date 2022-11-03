@@ -49,8 +49,8 @@ data:
 ``` 
   .X.Y
   ||  \-> Y :  look inside of it for an object called Name
-  ||-> X : find the X object
-  |--> . : top-most namespace for this scope
+  |\-> X : find the X object
+  \--> . : top-most namespace for this scope
 ````
 
 

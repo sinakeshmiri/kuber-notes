@@ -61,4 +61,88 @@ spec:
  `kubectl create -f persistentVolume.yaml`
 
 
+# Step3:
+
+Create a Persistent Volume Claim
+persistent volume must have the volumeBindingMode: WaitForFirstConsumer
+ is the only difference between a local volume and a host volume.
+the persistent volume claim is not bound to the persistent volume automatically. it will remain "Available" until the first consumer shows up
+
+```
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: my-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: my-local-storage
+  resources:
+    requests:
+      storage: 500Gi
+```
+
+`kubectl create -f persistentVolumeClaim.yaml`
+
+
+# Step4:
+he POD just needs to reference the volume claim. The volume claim, in turn, specifies its resource requirements. 
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: www
+  labels:
+    name: www
+spec:
+  containers:
+  - name: www
+    image: nginx:alpine
+    ports:
+      - containerPort: 80
+        name: www
+    volumeMounts:
+      - name: www-persistent-storage
+        mountPath: /usr/share/nginx/html
+  volumes:
+    - name: www-persistent-storage
+      persistentVolumeClaim:
+        claimName: my-claim
+```
+
+`kubectl create -f http-pod.yaml`
+
+
+# StepX:
+
+Attach a new POD to the existing local volume
+
+```
+piVersion: v1
+kind: Pod
+metadata:
+  name: centos-local-volume
+  labels:
+    name: centos-local-volume
+spec:
+  containers:
+  - name: centos
+    image: centos
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do cat /data/index.html; sleep 10; done"]
+    volumeMounts:
+      - name: my-reference-to-the-volume
+        mountPath: /data
+  volumes:
+    - name: my-reference-to-the-volume
+      persistentVolumeClaim:
+        claimName: my-claim
+```
+
+
+
+![image](https://user-images.githubusercontent.com/72389059/200104809-04f6ff7f-e4de-4415-ae08-35cc4ba2da8c.png)
+
+
 source: https://vocon-it.com/2018/12/20/kubernetes-local-persistent-volumes/
